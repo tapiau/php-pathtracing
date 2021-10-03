@@ -1,4 +1,4 @@
-<?
+<?php
 
 declare(ticks = 1);
 define('__ROOT',realpath(dirname(__FILE__).'/..'));
@@ -30,32 +30,32 @@ function autoload()
 {
 //    ini_set('unserialize_callback_func','spl_autoload_call');
 //
-//    spl_autoload_register("_autoload");
+         spl_autoload_register("_autoload");
 
-	function __autoload($class_name)
-	{
-		$filename = str_replace('_','/',$class_name) . '.php';
-
-		$found = false;
-		foreach(explode(PATH_SEPARATOR,ini_get('include_path')) as $path)
-		{
-			if(file_exists($path.'/'.$filename))
-			{
-				$found = $path.'/'.$filename;
-			}
-		}
-		
-		if(!$found)
-		{
+//	function __autoload($class_name)
+//	{
+//		$filename = str_replace('_','/',$class_name) . '.php';
+//
+//		$found = false;
+//		foreach(explode(PATH_SEPARATOR,ini_get('include_path')) as $path)
+//		{
+//			if(file_exists($path.'/'.$filename))
+//			{
+//				$found = $path.'/'.$filename;
+//			}
+//		}
+//		
+//		if(!$found)
+//		{
 //			printr($filename);
 //			$dbg = debug_backtrace();
 //			printr($dbg);
-			
-			throw new Exception('Class '.$class_name.' not found');
-		}
-
-		require_once $found;
-	}
+//			
+//			throw new Exception('Class '.$class_name.' not found');
+//		}
+//
+//		require_once $found;
+//	}
 }
 function _autoload($class_name)
 {
@@ -81,18 +81,18 @@ function _autoload($class_name)
 
     require_once $found;
 }
-function is_iterable($obj,$interface=false)
-{
-	return 
-		is_object($obj) ?
-			$interface ?
-				array_search('Iterator',class_implements($obj))!==false
-				:
-				true
-			:
-			is_array($obj)
-	;
-}
+//function is_iterable($obj,$interface=false)
+//{
+//	return 
+//		is_object($obj) ?
+//			$interface ?
+//				array_search('Iterator',class_implements($obj))!==false
+//				:
+//				true
+//			:
+//			is_array($obj)
+//	;
+//}
 function array_qsort(&$array, $column=0, $order=SORT_ASC)
 {
 	$dst = array();
@@ -136,10 +136,10 @@ function str_begins($haystack,$needle)
 {
 	return substr($haystack,0,strlen($needle))==$needle;
 }
-function str_contains($haystack,$needle)
-{
-	return strpos($haystack,$needle)!==false;
-}
+//function str_contains($haystack,$needle)
+//{
+//	return strpos($haystack,$needle)!==false;
+//}
 //function backtrace()
 //{
 //	return array_map(

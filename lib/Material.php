@@ -21,7 +21,7 @@ class Material {
 	 * @param $normal
 	 * @return V3
 	 */
-	public function bounce(Ray $ray, $normal)
+	public function bounce(Ray $ray, V3 $normal)
 	{
 		return getRandomNormalInHemisphere($normal);
 	}

@@ -11,8 +11,8 @@ require_once('lib/func.php');
 require_once('lib/func_raytrace.php');
 autoload();
 
-$width = 320;
-$height = 200;
+$width = 640;
+$height = 400;
 
 $image = imagecreatetruecolor($width,$height);
 
@@ -89,22 +89,35 @@ while(++$i)
 	echo "Iteration $i:\n";
 	$renderer->iterate();
 
+	$max = 0;
+
 	for($y=0;$y<$height;$y++)
 	{
 		for($x=0;$x<$width;$x++)
 		{
-			$buffer[$y][$x] = $buffer[$y][$x]->add($renderer->buffer[$y][$x]);
+			$vector = $buffer[$y][$x] = $buffer[$y][$x]->add($renderer->buffer[$y][$x]);
+			$max = max($max, $vector->x);
+			$max = max($max, $vector->y);
+			$max = max($max, $vector->z);
 		}
 	}
+
+	echo "MAX={$max}".PHP_EOL;
+	$scale = 250/$i;
+
 	for($y=0;$y<$height;$y++)
 	{
 		for($x=0;$x<$width;$x++)
 		{
+
+//echo "AAA=".($buffer[$y][$x]->x).PHP_EOL;
+
+
 			$color = imagecolorallocate(
 				$image,
-				($buffer[$y][$x]->x * 256) / $i,
-				($buffer[$y][$x]->y * 256) / $i,
-				($buffer[$y][$x]->z * 256) / $i
+				min(255,$buffer[$y][$x]->x * $scale),
+				min(255,$buffer[$y][$x]->y * $scale),
+				min(255,$buffer[$y][$x]->z * $scale)
 			);
 
 			imagesetpixel($image,$x,$y,$color);
